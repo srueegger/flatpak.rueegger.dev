@@ -1,0 +1,14 @@
+Options -Indexes
+
+# MIME types for OSTree repository objects
+AddType application/octet-stream .commit .dirtree .dirmeta .filez .superblock
+
+# Keep-alive for efficient OSTree fetching (many small requests)
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# Compression for summary files
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/octet-stream
+</IfModule>

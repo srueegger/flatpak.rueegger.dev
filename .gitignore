@@ -1,0 +1,9 @@
+# GPG keyring (private keys!)
+gpg/
+
+# Local OSTree repository (too large for git)
+repo/
+
+# Flatpak build directory
+_flatpak/
+.flatpak-builder/
