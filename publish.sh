@@ -21,7 +21,10 @@ REMOTE_PATH="flatpak.rueegger.dev"
 APP_bootmate_DIR="$HOME/Projects/bootmate"
 APP_bootmate_MANIFEST="me.rueegger.bootmate.yml"
 
-ALL_APPS="bootmate"
+APP_cargo_DIR="$HOME/Projects/me.rueegger.cargo"
+APP_cargo_MANIFEST="me.rueegger.cargo.yml"
+
+ALL_APPS="bootmate cargo"
 
 # ── Functions ──────────────────────────────────────────────────
 
@@ -156,4 +159,5 @@ echo "    flatpak remote-add --if-not-exists rueegger-dev https://flatpak.rueegg
 echo ""
 echo "  Then install apps with:"
 echo "    flatpak install rueegger-dev me.rueegger.bootmate"
+echo "    flatpak install rueegger-dev me.rueegger.cargo"
 echo "══════════════════════════════════════════════════"
