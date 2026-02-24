@@ -13,8 +13,8 @@ GPG_HOMEDIR="$SCRIPT_DIR/gpg"
 GPG_KEY_ID="A597D880A0505622AA55A6CB0718DBE47E8CA409"
 BRANCH="stable"
 
-SERVER="scifitre@flatpak.rueegger.dev"
-REMOTE_PATH="flatpak.rueegger.dev"
+SERVER="scifitre@rueegger.dev"
+REMOTE_PATH="public_html/flatpak.rueegger.dev"
 
 # ── App definitions ────────────────────────────────────────────
 # Add new apps here: APP_<name>_DIR and APP_<name>_MANIFEST
