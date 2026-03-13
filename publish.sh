@@ -55,7 +55,6 @@ build_app() {
 
     flatpak-builder \
         --user \
-        --install-deps-from=flathub \
         --repo="$REPO_DIR" \
         --gpg-sign="$GPG_KEY_ID" \
         --gpg-homedir="$GPG_HOMEDIR" \
