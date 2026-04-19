@@ -3,8 +3,29 @@
 # Usage: ./publish.sh [app]
 # Example: ./publish.sh bootmate
 # Without argument: publishes all configured apps
+#
+# All builds must run inside the bootmate-devsystem Distrobox (the host
+# intentionally doesn't have flatpak-builder installed). If this script is
+# started on the host, it re-execs itself inside the box automatically.
 
 set -euo pipefail
+
+DEVBOX_NAME="bootmate-devsystem"
+
+# ── Auto-reentry into the dev distrobox ────────────────────────
+if ! command -v flatpak-builder >/dev/null 2>&1; then
+    if [ -n "${BOOTMATE_DEVBOX_REENTRY:-}" ]; then
+        echo "ERROR: flatpak-builder not found inside $DEVBOX_NAME." >&2
+        echo "Recreate the box: ~/Projects/bootmate/scripts/devbox-setup.sh" >&2
+        exit 1
+    fi
+    export BOOTMATE_DEVBOX_REENTRY=1
+    exec distrobox enter "$DEVBOX_NAME" -- "$0" "$@"
+fi
+
+# Reuse the box-local Flatpak user installation (populated by devbox-flatpak.sh).
+# Keeps host $HOME clean and avoids redownloading GNOME runtimes.
+export FLATPAK_USER_DIR="${FLATPAK_USER_DIR:-/var/cache/bootmate-flatpak/flatpak-user}"
 
 # ── Configuration ──────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -135,8 +156,8 @@ if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
     echo "  $0 bootmate    # Build and publish bootmate"
     echo "  $0             # Build and publish all apps"
     echo ""
-    echo "Run inside distrobox:"
-    echo "  distrobox enter bootmate-dev -- $0 bootmate"
+    echo "Note: this script auto-enters the $DEVBOX_NAME Distrobox when run"
+    echo "      from the host — no manual 'distrobox enter' needed."
     exit 0
 fi
 
